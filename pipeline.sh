@@ -55,5 +55,9 @@ mkdir cufn
 ~/Programy/cufflinks-2.2.1.Linux_x86_64/cuffnorm  -o ./cufn/ ./cuf/transcripts.gtf ./cufq/abundances.cxb ./cufq/abundances.cxb 
 # Koniec zbędności
 
-
 python ./konwersja_csv.py
+
+# BedTools (Chip-seq)
+mkdir piki_analiza
+~/Programy/bedtools2/bin/closestBed -a ./peaks/A_summits.bed -b ./EF2/Annotation/Genes/genes.bed > ./piki_analiza/A_geny.csv
+~/Programy/bedtools2/bin/closestBed -a ./peaks/B_summits.bed -b ./EF2/Annotation/Genes/genes.bed > ./piki_analiza/B_geny.csv

@@ -11,8 +11,11 @@ done
 mkdir raporty_po_czyszczeniu
 ~/Programy/FastQC/fastqc -t 8 -o ./raporty_po_czyszczeniu ./oczyszczone/A_1P.fastq.gz ./oczyszczone/A_2P.fastq.gz ./oczyszczone/B_1P.fastq.gz ./oczyszczone/B_2P.fastq.gz ./oczyszczone/C_1P.fastq.gz ./oczyszczone/C_2P.fastq.gz ./oczyszczone/input_1P.fastq.gz ./oczyszczone/input_2P.fastq.gz
 
+# GENOM
+# wget ftp://igenome:G3nom3s4u@ussd-ftp.illumina.com/Schizosaccharomyces_pombe/Ensembl/EF2/Schizosaccharomyces_pombe_Ensembl_EF2.tar.gz
+# python3.6 gtf2bed.py
+
 # BOWTIE
-wget ftp://igenome:G3nom3s4u@ussd-ftp.illumina.com/Schizosaccharomyces_pombe/Ensembl/EF2/Schizosaccharomyces_pombe_Ensembl_EF2.tar.gz
 mkdir wyniki
 for f in A B C input
 do

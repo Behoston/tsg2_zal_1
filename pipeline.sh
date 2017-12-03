@@ -29,13 +29,26 @@ do
     samtools index bam/$f.bam
 done
 
-# MACS
+################## ChIP-seq #######################
+
+# MACS (Chip-seq)
 for f in A B
 do
     macs2 callpeak -t ./bam/$f.bam -c ./bam/input.bam -f BAM -n $f -g 12462637 --outdir ./peaks
 done
 
-# TopHat
+
+# BedTools (Chip-seq)
+mkdir piki_analiza
+~/Programy/bedtools2/bin/intersectBed -a ./peaks/A_summits.bed -b ./EF2/Annotation/Genes/genes.bed > ./piki_analiza/A_geny.csv
+~/Programy/bedtools2/bin/closestBed -a ./peaks/B_summits.bed -b ./EF2/Annotation/Genes/genes.bed > ./piki_analiza/B_geny.csv
+
+
+
+################## RNA-seq #######################
+
+
+# TopHat (RNA-seq)
 PATH=$PATH:~/Programy/bowtie
 ~/Programy/tophat-2.1.1.Linux_x86_64/tophat2 -p 8 ./EF2/Sequence/Bowtie2Index/genome ./oczyszczone/C_1P.fastq.gz ./oczyszczone/C_2P.fastq.gz 
 samtools sort -@ 8 tophat_out/accepted_hits.bam tophat_out/accepted_hits_s
@@ -43,7 +56,7 @@ rm tophat_out/accepted_hits.bam
 mv tophat_out/accepted_hits_s.bam tophat_out/accepted_hits.bam
 samtools index tophat_out/accepted_hits.bam
 
-# CUFFLINK
+# CUFFLINK (RNA-seq)
 mkdir cuf
 ~/Programy/cufflinks-2.2.1.Linux_x86_64/cufflinks -p 8 -o ./cuf/ -g ./EF2/Annotation/Genes/genes.gtf ./tophat_out/accepted_hits.bam
 
@@ -52,12 +65,13 @@ mkdir cufq
 ~/Programy/cufflinks-2.2.1.Linux_x86_64/cuffquant -p 8 -o ./cufq/ ./cuf/transcripts.gtf ./tophat_out/accepted_hits.bam
 mkdir cufn
 # nie jestem co do tego przekonany bo 2 razy daje ten sam plik do normalizacji, ale może dzięki temu ogarnie tło
-~/Programy/cufflinks-2.2.1.Linux_x86_64/cuffnorm  -o ./cufn/ ./cuf/transcripts.gtf ./cufq/abundances.cxb ./cufq/abundances.cxb 
+~/Programy/cufflinks-2.2.1.Linux_x86_64/cuffnorm  -o ./cufn/ ./cuf/transcripts.gtf ./cufq/abundances.cxb ./cufq/abundances.cxb
+mkdir cufd
+~/Programy/cufflinks-2.2.1.Linux_x86_64/cuffdiff  -o ./cufd/ ./cuf/transcripts.gtf ./cufq/abundances.cxb ./cufq/abundances.cxb
 # Koniec zbędności
 
 python ./konwersja_csv.py
 
-# BedTools (Chip-seq)
-mkdir piki_analiza
-~/Programy/bedtools2/bin/closestBed -a ./peaks/A_summits.bed -b ./EF2/Annotation/Genes/genes.bed > ./piki_analiza/A_geny.csv
-~/Programy/bedtools2/bin/closestBed -a ./peaks/B_summits.bed -b ./EF2/Annotation/Genes/genes.bed > ./piki_analiza/B_geny.csv
+
+
+################## porównanie #######################

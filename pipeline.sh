@@ -61,16 +61,6 @@ samtools index tophat_out/accepted_hits.bam
 mkdir cuf
 ~/Programy/cufflinks-2.2.1.Linux_x86_64/cufflinks -p 8 -o ./cuf/ -G ./EF2/Annotation/Genes/genes.gtf ./tophat_out/accepted_hits.bam
 
-# To jest chyba totalnie zbędne...
-mkdir cufq
-~/Programy/cufflinks-2.2.1.Linux_x86_64/cuffquant -p 8 -o ./cufq/ ./cuf/transcripts.gtf ./tophat_out/accepted_hits.bam
-mkdir cufn
-# nie jestem co do tego przekonany bo 2 razy daje ten sam plik do normalizacji, ale może dzięki temu ogarnie tło
-~/Programy/cufflinks-2.2.1.Linux_x86_64/cuffnorm  -o ./cufn/ ./cuf/transcripts.gtf ./cufq/abundances.cxb ./cufq/abundances.cxb
-mkdir cufd
-~/Programy/cufflinks-2.2.1.Linux_x86_64/cuffdiff  -o ./cufd/ ./cuf/transcripts.gtf ./cufq/abundances.cxb ./cufq/abundances.cxb
-# Koniec zbędności
-
 python ./konwersja_csv.py
 
 

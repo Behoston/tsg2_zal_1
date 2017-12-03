@@ -40,10 +40,9 @@ done
 
 # BedTools (Chip-seq)
 mkdir piki_analiza
-# Nie jestem pewien czy intersect czy closest
-~/Programy/bedtools2/bin/intersectBed -a ./peaks/A_summits.bed -b ./EF2/Annotation/Genes/genes.bed > ./piki_analiza/A_geny.csv
-~/Programy/bedtools2/bin/closestBed -a ./peaks/B_summits.bed -b ./EF2/Annotation/Genes/genes.bed > ./piki_analiza/B_geny.csv
-
+# intesect
+~/Programy/bedtools2/bin/intersectBed -wa -wb -a ./peaks/A_summits.bed -b ./EF2/Annotation/Genes/genes.bed > ./piki_analiza/A_geny.csv
+~/Programy/bedtools2/bin/intersectBed -wa -wb -a ./peaks/B_summits.bed -b ./EF2/Annotation/Genes/genes.bed > ./piki_analiza/B_geny.csv
 
 
 ################## RNA-seq #######################

@@ -1,5 +1,6 @@
 import csv
 import re
+from copy import copy
 
 BASE_DIR = '/home/behoston/Dokumenty/TSG2/zaliczeniowy_1/EF2/Annotation/Genes/'
 TYPES = {
@@ -39,3 +40,17 @@ for type_name, rows in TYPES.items():
     with open(f'{BASE_DIR}{type_name}.bed', 'w') as f:
         for row in rows:
             f.write(row_to_bed(row))
+
+
+def start_to_promoter(row):
+    promoter = copy(row)
+    start = int(row['start'])
+    promoter['stop'] = max(start - 1, 0)
+    promoter['start'] = max(start - 500, 0)
+    return promoter
+
+
+with open(f'{BASE_DIR}promoter.bed', 'w') as f:
+    for row in TYPES['start_codon']:
+        promoter = start_to_promoter(row)
+        f.write(row_to_bed(promoter))

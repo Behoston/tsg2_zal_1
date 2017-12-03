@@ -40,6 +40,7 @@ done
 
 # BedTools (Chip-seq)
 mkdir piki_analiza
+# Nie jestem pewien czy intersect czy closest
 ~/Programy/bedtools2/bin/intersectBed -a ./peaks/A_summits.bed -b ./EF2/Annotation/Genes/genes.bed > ./piki_analiza/A_geny.csv
 ~/Programy/bedtools2/bin/closestBed -a ./peaks/B_summits.bed -b ./EF2/Annotation/Genes/genes.bed > ./piki_analiza/B_geny.csv
 
@@ -58,7 +59,7 @@ samtools index tophat_out/accepted_hits.bam
 
 # CUFFLINK (RNA-seq)
 mkdir cuf
-~/Programy/cufflinks-2.2.1.Linux_x86_64/cufflinks -p 8 -o ./cuf/ -g ./EF2/Annotation/Genes/genes.gtf ./tophat_out/accepted_hits.bam
+~/Programy/cufflinks-2.2.1.Linux_x86_64/cufflinks -p 8 -o ./cuf/ -G ./EF2/Annotation/Genes/genes.gtf ./tophat_out/accepted_hits.bam
 
 # To jest chyba totalnie zbędne...
 mkdir cufq
